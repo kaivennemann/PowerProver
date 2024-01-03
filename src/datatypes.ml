@@ -93,7 +93,7 @@ let rec simplify_true_false = function
     | p1', True -> p1'
     | False, p2' -> simplify_true_false (Not(p2'))
     | p1', False -> simplify_true_false (Not(p1'))
-    | p1', p2' -> Implies(p1', p2'));;
+    | p1', p2' -> Iff(p1', p2'));;
 
 (* Finds a symbol in a list of substitutions and returns the value to substitute for that symbol *)
 let rec replace sub symbol =
