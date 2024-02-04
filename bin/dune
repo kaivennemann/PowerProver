@@ -1,0 +1,4 @@
+(executable
+ (public_name power_prover)
+ (name main)
+ (libraries power_prover))
