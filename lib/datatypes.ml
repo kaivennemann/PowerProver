@@ -82,12 +82,12 @@ let rec simplify_true_false = function
     | False, p2' -> p2'
     | p1', False -> p1'
     | p1', p2' -> Or(p1', p2'))
-  | Implies (p1, p2) -> 
+  | Implies (p1, p2) ->
     (match simplify_true_false p1, simplify_true_false p2 with
     | False, _ -> True
     | True, p2' -> p2'
     | p1', p2' -> Implies(p1', p2'))
-  | Iff (p1, p2) -> 
+  | Iff (p1, p2) ->
     (match simplify_true_false p1, simplify_true_false p2 with
     | True, p2' -> p2'
     | p1', True -> p1'
@@ -140,28 +140,3 @@ let test_interpretation prop i =
   | True -> Some true
   | False -> Some false
   | _ -> None;; (* return None if cannot be determined *)
-
-
-(* -------------------------------------------------------------------------------------------------------------------- *)
-(* ------------------------------------------------------ Examples ---------------------------------------------------- *)
-(* -------------------------------------------------------------------------------------------------------------------- *)
-
-let show_example p i =
-  print_endline ("Proposition p:     " ^ (string_of_prop p));
-  print_endline ("p in NNF:          " ^ (string_of_prop (to_nnf p)));
-  print_endline ("Interpretation i:  " ^ (string_of_interpr i));
-  print_endline ("p under i:         " ^ (string_of_prop (interpret p i)) ^ "\n");;
-
-let p1 = Not(Not(Not(And(Lit "a", Lit "b"))));;
-let p2 = Iff(Not(Implies(Or(Lit "a", Lit "b"), And(Lit "b", Lit "c"))), True);;
-let i1 = [("a", false); ("b", true); ("c", false)];;
-let i2 = [("a", false); ("b", false)];;
-let i3 = [("c", true)];;
-
-show_example p1 i1;;
-show_example p1 i2;;
-show_example p1 i3;;
-
-show_example p2 i1;;
-show_example p2 i2;;
-show_example p2 i3;;
