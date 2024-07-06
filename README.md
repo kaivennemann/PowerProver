@@ -26,6 +26,32 @@ Experimentation with automated proofs.
 - `opam install dream`
 - add *dream* to libraries in */bin/dune*: `(libraries power_prover dream)`
 - add *dream* to package dependencies in */dune-project*: ` (depends ocaml dune dream)`
+- add Lwt preprocessing to */bin/dune*: `(preprocess (pps lwt_ppx))`
+    - this tells dune to preprocess the code with an AST rewriter that can transform Lwt promises (e.g. `let%lwt = ...`)
+
+
+## To Do
+
+### Short-Term
+
+- lexer + parser for inputs
+    - input sanitizer (no inputs longer than set number of vars)
+- get API up and running
+- read into Lwt library
+
+### Ideas
+
+- brute force solver
+- prolog solver
+- sequent calculus solver (with intermediate steps)
+    - tableau calculus
+    - free variable tableau calculus
+- propositional and first-order logic
+- Hoare logic?
+
+### Considerations
+
+- none for now
 
 
 ## Resources

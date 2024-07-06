@@ -1,4 +1,5 @@
 (executable
  (public_name power_prover)
  (name main)
- (libraries power_prover dream))
+ (libraries power_prover dream)
+ (preprocess (pps lwt_ppx)))
