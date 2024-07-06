@@ -28,6 +28,7 @@ Experimentation with automated proofs.
 - add *dream* to package dependencies in */dune-project*: ` (depends ocaml dune dream)`
 - add Lwt preprocessing to */bin/dune*: `(preprocess (pps lwt_ppx))`
     - this tells dune to preprocess the code with an AST rewriter that can transform Lwt promises (e.g. `let%lwt = ...`)
+- same with `ppx_yojson_conv` (Jane Street's library that converts between JSON and OCaml data types)
 
 
 ## To Do

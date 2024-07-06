@@ -1,2 +1,3 @@
 (library
- (name power_prover))
+ (name power_prover)
+ (preprocess (pps lwt_ppx ppx_yojson_conv)))

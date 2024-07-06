@@ -14,4 +14,4 @@
 (package
  (name power_prover)
  (synopsis "Experimentation with automated proofs")
- (depends ocaml dune dream))
+ (depends ocaml dune dream ppx_yojson_conv))

@@ -1,34 +1,33 @@
-let successes = ref 0
-let failures = ref 0
+open Ppx_yojson_conv_lib.Yojson_conv.Primitives
+open Power_prover.Parser
 
-let middleware inner_handler request =
-  try%lwt
-    let%lwt response = inner_handler request in
-    successes := !successes + 1;
-    Lwt.return response
-  
-  with exn ->
-    failures := !failures + 1;
-    raise exn
-  
+
+type post_request_data = {
+  data : string;
+} [@@deriving yojson]
+
+
 let () =
   Dream.run
   @@ Dream.logger
-  @@ middleware
+  @@ Dream.origin_referrer_check
   @@ Dream.router [
 
-    Dream.get "/failures"
-      (fun _ ->
-        raise (Failure "Webapp failed!")
-      );
+    Dream.post "/"
+      (fun request ->
+        let%lwt body = Dream.body request in
 
-    Dream.get "/info"
-      (fun _ ->
-        Dream.html (Printf.sprintf
-          "Number of successes: %3i<br>Number of failures: %3i"
-          !successes
-          !failures
-        )
-      );
+        let post_request_data =
+          body
+          |> Yojson.Safe.from_string
+          |> post_request_data_of_yojson
+        in
+
+        let _ = parse post_request_data.data in
+
+        `String "Dummy return data"
+        |> Yojson.Safe.to_string
+        |> Dream.json);
 
   ]
+  
