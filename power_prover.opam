@@ -8,6 +8,7 @@ bug-reports: "https://github.com/kaivennemann/PowerProver/issues"
 depends: [
   "ocaml"
   "dune" {>= "3.13"}
+  "dream"
   "odoc" {with-doc}
 ]
 build: [
