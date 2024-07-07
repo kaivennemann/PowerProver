@@ -1,6 +1,7 @@
 open Power_prover.Datatypes
 open Power_prover.Utils
 open Power_prover.To_string
+open Power_prover.Lexer
 
 let show_example p i =
   print_endline ("Proposition p:     " ^ (string_of_prop p));
@@ -22,3 +23,9 @@ let () =
   show_example p2 i1;
   show_example p2 i2;
   show_example p2 i3;;
+
+let _ = 
+  let tokens = lex "a|b&&     i love sushi" in
+  let s = string_of_tokens tokens in
+  print_endline s
+(* TODO: fix LIT issue *)
