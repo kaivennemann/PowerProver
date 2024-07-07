@@ -1,4 +1,6 @@
 open Power_prover.Datatypes
+open Power_prover.Utils
+open Power_prover.To_string
 
 let show_example p i =
   print_endline ("Proposition p:     " ^ (string_of_prop p));
