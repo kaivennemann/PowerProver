@@ -2,7 +2,143 @@
 
 ## Overview
 
-Experimentation with automated proofs.
+An automated theorem-prover for propositional logic. This will be updated for first-order logic. The prover is exposed as an API using the Dream web framework.
+
+Steps:
+1. Lex the raw input (a string representing the formula to prove) to generate a list of tokens.
+2. Parse the token list to generate a syntax tree.
+3. Check validity? (expensive operation)
+4. Run sequent calculus computation on the negation of the formula.
+5. Return list of sequents that prove the formula.
+
+## Lexing
+
+We first lex the input, obtaining the following possible tokens:
+
+```
+type tok =
+  | TRUE
+  | FALSE
+  | LIT of string
+  | NOT
+  | AND
+  | OR
+  | IMPLIES
+  | IFF
+  | LEFT_PAREN
+  | RIGHT_PAREN
+  | SKIP
+```
+
+## Parsing
+
+First, we decided on an appropriate grammar for parsing the token list.
+
+### Approach 1: Naive Grammar
+
+#### Simple CFG
+
+```
+S ::= E $
+E ::= TRUE
+  | FALSE
+  | LIT s
+  | NOT E
+  | E AND E
+  | E OR E
+  | E IMPLIES E
+  | E IFF E
+  | LEFT_PAREN E RIGHT_PAREN
+```
+
+#### Issues
+- we need to encode precedence
+- above grammar is ambiguous
+    - consider `NOT E OR E`, which can be parenthesized as `(NOT E) OR E` vs. `NOT (E OR E)`
+
+### Approach 2: LL(1) Grammar
+
+#### CFG redefined as LL(1) grammar
+
+```
+S  ::=  E $
+E  ::=  F E'
+E' ::=  IFF F E' | eps
+F  ::=  G F'
+F' ::=  IMPLIES G F' | eps
+G  ::=  H G'
+G' ::=  OR H G' | eps
+H  ::=  I H'
+H' ::=  AND I H' | eps
+I  ::=  NOT I | J
+J  ::=  LEFT_PAREN E RIGHT_PAREN | TRUE | FALSE | LIT s
+```
+
+#### FIRST Sets
+
+```
+FIRST(S)  = FIRST(E)
+          = FIRST(F)
+          = FIRST(G)
+          = FIRST(H)
+          = FIRST(I)
+          = {TRUE, FALSE, LIT s, NOT, LEFT_PAREN}
+FIRST(J)  = {TRUE, FALSE, LIT s, LEFT_PAREN}
+FIRST(E') = {IFF, eps}
+FIRST(F') = {IMPLIES, eps}
+FIRST(G') = {OR, eps}
+FIRST(H') = {AND, eps}
+```
+
+#### FOLLOW Sets
+
+```
+FOLLOW(E)                                           = {$, RIGHT_PAREN}
+FOLLOW(J)   = FOLLOW(I)                             = {AND, OR, IMPLIES, IFF, $, RIGHT_PAREN}
+FOLLOW(I)   = FIRST(H') U FOLLOW(H') U FOLLOW(H)    = {AND, OR, IMPLIES, IFF, $, RIGHT_PAREN}
+FOLLOW(H')  = FOLLOW(H)                             = {OR, IMPLIES, IFF, $, RIGHT_PAREN}
+FOLLOW(H)   = FIRST(G') U FOLLOW(G') U FOLLOW(G)    = {OR, IMPLIES, IFF, $, RIGHT_PAREN}
+FOLLOW(G')  = FOLLOW(G)                             = {IMPLIES, IFF, $, RIGHT_PAREN}
+FOLLOW(G)   = FIRST(F') U FOLLOW(F') U FOLLOW(F)    = {IMPLIES, IFF, $, RIGHT_PAREN}
+FOLLOW(F')  = FOLLOW(F)                             = {IFF, $, RIGHT_PAREN}
+FOLLOW(F)   = FIRST(E') U FOLLOW(E') U FOLLOW(E)    = {IFF, $, RIGHT_PAREN}
+FOLLOW(E')  = FOLLOW(E)                             = {$, RIGHT_PAREN}
+```
+
+#### Notes
+
+- this approach can work, but the grammar is quite convoluted
+- we turn to LR grammars
+
+### Approach 3: LR Grammar
+
+#### LR(1) Grammar
+
+```
+S  ::=  E $
+E  ::=  E IFF F | F
+F  ::=  F IMPLIES G | G
+G  ::=  G OR H | H
+H  ::=  H AND I | I
+I  ::=  NOT I | LEFT_PAREN E RIGHT_PAREN | TRUE | FALSE | LIT s 
+```
+
+#### FIRST Sets
+
+```
+FIRST(S)  = FIRST(E)
+          = FIRST(F)
+          = FIRST(G)
+          = FIRST(H)
+          = FIRST(I)
+          = {TRUE, FALSE, LIT s, NOT, LEFT_PAREN}
+```
+
+#### FOLLOW Sets
+
+```
+TODO
+```
 
 
 ## Useful Commands
