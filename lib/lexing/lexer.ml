@@ -75,6 +75,7 @@ let my_tdfa : tdfa =
       | 8, 'e'                  -> 9, (fun _ -> FALSE)
       | 8, c when is_ltr c      -> 10, append_lit
       | 9, c when is_ltr c      -> 10, (fun _ -> (LIT ("false" ^ Char.escaped c)))
+      | 10, c when is_ltr c     -> 10, append_lit
       | _                       -> raise (No_Transition (i, c))
   in
 

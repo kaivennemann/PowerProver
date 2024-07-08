@@ -41,4 +41,4 @@ let string_of_tok = function
 
 let rec string_of_tokens = function
   | [] -> ""
-  | t :: ts -> string_of_tok t ^ ", " ^ string_of_tokens ts
+  | t :: ts -> "[" ^ string_of_tok t ^ "] " ^ string_of_tokens ts
