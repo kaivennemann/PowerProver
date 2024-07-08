@@ -1,7 +1,7 @@
 
 (* Sequent Calculus *)
 
-open Datatypes
+open Types
 open To_string
 
 

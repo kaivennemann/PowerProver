@@ -1,6 +1,25 @@
 (* Lexer for transforming an input string into a list of tokens *)
 
-open Lexer_utils
+open Types
+open Headers
+open Utils
+
+
+(*
+  Ordered lexer rules:
+
+  true            => TRUE         [1,2,3,4]
+  false           => FALSE        [5,6,7,8,9]
+  [a-zA-Z]+ as s  => LIT s        [10]
+  ¬               => NOT          [11]
+  ∧               => AND          [12]
+  ∨               => OR           [13]
+  →               => IMPLIES      [14]
+  ↔               => IFF          [15]
+  (               => LEFT_PAREN   [16]
+  )               => RIGHT_PAREN  [17]
+  [ \t\n]         => SKIP         [18]
+*)
 
 (* Define a TDFA *)
 let my_tdfa : tdfa =

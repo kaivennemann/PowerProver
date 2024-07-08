@@ -1,6 +1,6 @@
 (* Utility functions for dealing with our new data types *)
 
-open Datatypes
+open Types
 
 
 (* Converts an interpretation to a substitution *)

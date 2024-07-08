@@ -1,5 +1,5 @@
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
-open Power_prover.Parser
+open Power_prover.Parsing.Parser
 
 
 type post_request_data = {

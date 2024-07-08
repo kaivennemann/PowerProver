@@ -30,6 +30,10 @@ Experimentation with automated proofs.
     - this tells dune to preprocess the code with an AST rewriter that can transform Lwt promises (e.g. `let%lwt = ...`)
 - same with `ppx_yojson_conv` (Jane Street's library that converts between JSON and OCaml data types)
 
+### Issues
+
+- avoid giving a file the same name as its directory; Dune treats both files and directories as modules, so it can't distinguish between them if they have the same name
+
 
 ## To Do
 
@@ -37,6 +41,7 @@ Experimentation with automated proofs.
 
 - lexer + parser for inputs
     - input sanitizer (no inputs longer than set number of vars)
+- use OCaml modules
 - get API up and running
 - read into Lwt library
 
