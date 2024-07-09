@@ -70,8 +70,7 @@ G  ::=  H G'
 G' ::=  OR H G' | eps
 H  ::=  I H'
 H' ::=  AND I H' | eps
-I  ::=  NOT I | J
-J  ::=  LEFT_PAREN E RIGHT_PAREN | TRUE | FALSE | LIT s
+I  ::=  NOT I | LEFT_PAREN E RIGHT_PAREN | TRUE | FALSE | LIT s
 ```
 
 #### FIRST Sets
@@ -83,7 +82,6 @@ FIRST(S)  = FIRST(E)
           = FIRST(H)
           = FIRST(I)
           = {TRUE, FALSE, LIT s, NOT, LEFT_PAREN}
-FIRST(J)  = {TRUE, FALSE, LIT s, LEFT_PAREN}
 FIRST(E') = {IFF, eps}
 FIRST(F') = {IMPLIES, eps}
 FIRST(G') = {OR, eps}
@@ -94,21 +92,20 @@ FIRST(H') = {AND, eps}
 
 ```
 FOLLOW(E)                                           = {$, RIGHT_PAREN}
-FOLLOW(J)   = FOLLOW(I)                             = {AND, OR, IMPLIES, IFF, $, RIGHT_PAREN}
-FOLLOW(I)   = FIRST(H') U FOLLOW(H') U FOLLOW(H)    = {AND, OR, IMPLIES, IFF, $, RIGHT_PAREN}
-FOLLOW(H')  = FOLLOW(H)                             = {OR, IMPLIES, IFF, $, RIGHT_PAREN}
-FOLLOW(H)   = FIRST(G') U FOLLOW(G') U FOLLOW(G)    = {OR, IMPLIES, IFF, $, RIGHT_PAREN}
-FOLLOW(G')  = FOLLOW(G)                             = {IMPLIES, IFF, $, RIGHT_PAREN}
-FOLLOW(G)   = FIRST(F') U FOLLOW(F') U FOLLOW(F)    = {IMPLIES, IFF, $, RIGHT_PAREN}
-FOLLOW(F')  = FOLLOW(F)                             = {IFF, $, RIGHT_PAREN}
-FOLLOW(F)   = FIRST(E') U FOLLOW(E') U FOLLOW(E)    = {IFF, $, RIGHT_PAREN}
 FOLLOW(E')  = FOLLOW(E)                             = {$, RIGHT_PAREN}
+FOLLOW(F)   = FIRST(E') U FOLLOW(E') U FOLLOW(E)    = {IFF, $, RIGHT_PAREN}
+FOLLOW(F')  = FOLLOW(F)                             = {IFF, $, RIGHT_PAREN}
+FOLLOW(G)   = FIRST(F') U FOLLOW(F') U FOLLOW(F)    = {IMPLIES, IFF, $, RIGHT_PAREN}
+FOLLOW(G')  = FOLLOW(G)                             = {IMPLIES, IFF, $, RIGHT_PAREN}
+FOLLOW(H)   = FIRST(G') U FOLLOW(G') U FOLLOW(G)    = {OR, IMPLIES, IFF, $, RIGHT_PAREN}
+FOLLOW(H')  = FOLLOW(H)                             = {OR, IMPLIES, IFF, $, RIGHT_PAREN}
+FOLLOW(I)   = FIRST(H') U FOLLOW(H') U FOLLOW(H)    = {AND, OR, IMPLIES, IFF, $, RIGHT_PAREN}
 ```
 
 #### Notes
 
 - this approach can work, but the grammar is quite convoluted
-- we turn to LR grammars
+- LL parsers are relatively straightforward to implement, however, so we opt for this approach (for now)
 
 ### Approach 3: LR Grammar
 
@@ -139,6 +136,11 @@ FIRST(S)  = FIRST(E)
 ```
 TODO
 ```
+
+#### Notes
+
+- this is probably the best approach with the simplest grammar
+- we might switch to an LR parser in the future
 
 
 ## Useful Commands
