@@ -1,7 +1,38 @@
 open Headers
+open To_string
+
+(* to string functions for debugging *)
+let string_of_nt = function
+  | S -> "S"
+  | E -> "E"
+  | E' -> "E'"
+  | F -> "F"
+  | F' -> "F'"
+  | G -> "G"
+  | G' -> "G'"
+  | H -> "H"
+  | H' -> "H'"
+  | I -> "I"
+
+let string_of_symbol = function
+  | Tm x -> string_of_tok x
+  | Nt x -> string_of_nt x
+
+let rec string_of_symbols = function
+  | [] -> ""
+  | sym :: xs -> "[" ^ string_of_symbol sym ^ "] " ^ string_of_symbols xs
+
+let print_state st =
+  print_endline ("stack: " ^ (string_of_symbols st.stack));
+  print_endline ("input: " ^ (string_of_tokens st.input))
+
+let rec string_of_ast = function
+  | Br (sym, ars) -> "Br(" ^ string_of_symbol sym ^ "| " ^ (String.concat ", " (List.map (fun ar -> string_of_ast !ar) ars))  ^ ")"
+  | Lf sym -> "(" ^ string_of_symbol sym ^ ")"
 
 (* step through parse states *)
 let step (parse_state : state) (action_table : table) =
+  print_state parse_state; (* currently printing the trace *)
   match parse_state.stack, parse_state.ast_stack, parse_state.input with
   | x::xs, t::ts, i::is -> (
       match action_table x i with

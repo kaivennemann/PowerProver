@@ -1,8 +1,11 @@
-open Ppx_yojson_conv_lib.Yojson_conv.Primitives
+(* open Ppx_yojson_conv_lib.Yojson_conv.Primitives *)
+open Power_prover.Types
 open Power_prover.Parsing.Parser
 
+let () =
+  let _ = parse [LIT "a"; OR; LIT "b"] in ()
 
-type post_request_data = {
+(* type post_request_data = {
   data : string;
 } [@@deriving yojson]
 
@@ -29,5 +32,5 @@ let () =
         |> Yojson.Safe.to_string
         |> Dream.json);
 
-  ]
+  ] *)
   

@@ -6,7 +6,7 @@ exception Parse_Error of string
 
 type terminal = tok
 
-type nonterminal = S | E | E' | F | F' | G | G' | H | H' | I | J
+type nonterminal = S | E | E' | F | F' | G | G' | H | H' | I
 
 type symbol = Nt of nonterminal | Tm of terminal
 
