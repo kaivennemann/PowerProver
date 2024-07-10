@@ -32,7 +32,7 @@ let rec string_of_ast = function
 
 (* step through parse states *)
 let step (parse_state : state) (action_table : table) =
-  print_state parse_state; (* currently printing the trace *)
+  (*print_state parse_state; currently printing the trace *)
   match parse_state.stack, parse_state.ast_stack, parse_state.input with
   | x::xs, t::ts, i::is -> (
       match action_table x i with
@@ -59,12 +59,8 @@ let step (parse_state : state) (action_table : table) =
 
 (* driver function to perform multistepping *)
 let rec driver (parse_state : state) (action_table : table) : unit =
-  if
-    parse_state.finished
-  then
-    if
-      parse_state.accepted
-    then
+  if parse_state.finished then
+    if parse_state.accepted then
       ()
     else
       raise (Parse_Error "Input rejected")

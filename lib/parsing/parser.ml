@@ -37,9 +37,7 @@ let my_action_table (sym : symbol) (tk : tok) : action =
   in
 
   let predict_if_in_follow tk follow prod =
-    if
-      List.mem tk follow
-    then
+    if List.mem tk follow then
       PREDICT prod
     else
       REJECT
@@ -79,4 +77,5 @@ let parse (input : tok list) =
     accepted = false
   } in
   driver initial_parse_state my_action_table;
-  print_endline (string_of_ast (!root))
+  (* print_endline (string_of_ast (!root)); *)
+  prop_of_ast !root

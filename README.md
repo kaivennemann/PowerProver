@@ -177,8 +177,7 @@ TODO
 
 ### Short-Term
 
-- lexer + parser for inputs
-    - input sanitizer (no inputs longer than set number of vars)
+- input sanitizer (no inputs longer than set number of vars, no $ signs)
 - use OCaml modules
 - get API up and running
 - read into Lwt library
@@ -193,9 +192,9 @@ TODO
 - propositional and first-order logic
 - Hoare logic?
 
-### Considerations
+### Fixes
 
-- none for now
+- none for now 
 
 
 ## Resources

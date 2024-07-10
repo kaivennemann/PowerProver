@@ -1,9 +1,13 @@
 (* open Ppx_yojson_conv_lib.Yojson_conv.Primitives *)
-open Power_prover.Types
+(* open Power_prover.Types *)
+open Power_prover.To_string
+open Power_prover.Lexing.Lexer
 open Power_prover.Parsing.Parser
 
 let () =
-  let _ = parse [LIT "a"; OR; LIT "b"] in ()
+  let lex_result = lex "a & b & c = b > x & y | c" in
+  let parse_result = parse lex_result in
+  print_prop parse_result
 
 (* type post_request_data = {
   data : string;
