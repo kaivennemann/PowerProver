@@ -65,7 +65,7 @@ let my_action_table (sym : symbol) (tk : tok) : action =
   | Nt I, LEFT_PAREN -> PREDICT (I, [Tm LEFT_PAREN; Nt E; Tm RIGHT_PAREN]);
   | Nt I, TRUE -> PREDICT (I, [Tm TRUE]);
   | Nt I, FALSE -> PREDICT (I, [Tm FALSE]);
-  | Nt I, LIT s -> PREDICT (I, [Tm (LIT s)])
+  | Nt I, LIT s when s <> "$" -> PREDICT (I, [Tm (LIT s)])
   | _ -> REJECT
 
 

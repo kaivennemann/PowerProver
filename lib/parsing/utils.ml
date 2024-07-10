@@ -24,7 +24,7 @@ let rec string_of_symbols = function
 
 let print_state st =
   print_endline ("stack: " ^ (string_of_symbols st.stack));
-  print_endline ("input: " ^ (string_of_tokens st.input))
+  print_endline (" input: " ^ (string_of_tokens st.input))
 
 let rec string_of_ast = function
   | Br (sym, ars) -> "Br(" ^ string_of_symbol sym ^ "| " ^ (String.concat ", " (List.map (fun ar -> string_of_ast !ar) ars))  ^ ")"
