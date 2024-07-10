@@ -12,7 +12,7 @@ type proposition =
   | Iff of proposition * proposition
 
 (* interpretation of propositional symbols *)
-type interpretation = (string * bool) list
+type interpretation = (string * bool) list (* note: we're using OCaml booleans here *)
 
 (* allows us to substitute any proposition for any atomic literal *)
 type substitution = (string * proposition) list

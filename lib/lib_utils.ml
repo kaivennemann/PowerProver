@@ -85,7 +85,7 @@ let rec substitute (prop : proposition) (sub : substitution) : proposition =
   | And(p1, p2) -> And(substitute p1 sub, substitute p2 sub)
   | Or(p1, p2) -> Or(substitute p1 sub, substitute p2 sub)
   | Implies(p1, p2) -> Implies(substitute p1 sub, substitute p2 sub)
-  | Iff(p1, p2) -> And(substitute p1 sub, substitute p2 sub)
+  | Iff(p1, p2) -> Iff(substitute p1 sub, substitute p2 sub)
 
 (* Converts a proposition to negation normal form *)
 let to_nnf prop =
