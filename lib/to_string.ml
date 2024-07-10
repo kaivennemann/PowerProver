@@ -26,7 +26,8 @@ let string_of_interpr (i : interpretation) =
     | (s, value) :: tl -> "(" ^ s ^ ": " ^ (string_of_bool value) ^ "), " ^ (stringify tl)
   in "[" ^ (stringify i) ^ "]";;
 
-let print_prop prop = print_endline (string_of_prop prop);;
+let print x string_of_x = x |> string_of_x |> print_endline
+let print_prop prop = print prop string_of_prop
 
 let string_of_tok = function
   | TRUE -> "TRUE"
