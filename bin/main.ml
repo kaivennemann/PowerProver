@@ -1,40 +1,28 @@
-(* open Ppx_yojson_conv_lib.Yojson_conv.Primitives *)
+(* Entry point for this web application *)
+
 (* open Power_prover.Types *)
 open Power_prover.To_string
+open Power_prover.Lib_utils
 open Power_prover.Lexing.Lexer
 open Power_prover.Parsing.Parser
+open Power_prover.Satisfiability.Satisfiable
 
 let () =
-  let lex_result = lex "a & b & c = b > x & y | c" in
+  let lex_result = lex "a & b & c = z > x & y | c" in
   let parse_result = parse lex_result in
-  print_prop parse_result
+  let p = simplify_true_false parse_result in
+  let i = satisfy p in
+  match i with
+  | None -> ()
+  | Some i -> print i string_of_interpr
+  (* let p2 = interpret p ["b", false] in
+  print_prop (to_nnf p2) *)
 
-(* type post_request_data = {
-  data : string;
-} [@@deriving yojson]
+(* let () =
+  let truth_vals = generate_truth_vals [Lit "a"; Lit "b"; Lit "c"; Lit "d"] in
+  let _ = List.map print_interpretation (get 17 truth_vals) in () *)
 
 
-let () =
-  Dream.run
-  @@ Dream.logger
-  @@ Dream.origin_referrer_check
-  @@ Dream.router [
 
-    Dream.post "/"
-      (fun request ->
-        let%lwt body = Dream.body request in
-
-        let post_request_data =
-          body
-          |> Yojson.Safe.from_string
-          |> post_request_data_of_yojson
-        in
-
-        let _ = parse post_request_data.data in
-
-        `String "Dummy return data"
-        |> Yojson.Safe.to_string
-        |> Dream.json);
-
-  ] *)
   
+(* let () = Power_prover.Api.Startapp.startapp () *)

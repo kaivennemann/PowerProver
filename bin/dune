@@ -1,5 +1,4 @@
 (executable
  (public_name power_prover)
  (name main)
- (libraries power_prover dream)
- (preprocess (pps lwt_ppx ppx_yojson_conv)))
+ (libraries power_prover))
