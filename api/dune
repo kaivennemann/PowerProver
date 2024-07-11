@@ -1,4 +1,4 @@
 (library
  (name api)
- (libraries dream)
+ (libraries power_prover dream)
  (preprocess (pps lwt_ppx ppx_yojson_conv)))
