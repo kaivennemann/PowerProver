@@ -37,14 +37,15 @@ let routes = [
         |> post_request_data_of_yojson
       in
       
-      let i = input.data |> parse_input |> find_satisfying_interpretation in
+      let i =
+        input.data
+        |> parse_input
+        |> find_satisfying_interpretation
+      in
 
-      let response = {
-        assignment = i;
-      } in
-
-      response |> yojson_of_interpretation |> Yojson.Safe.to_string |> Dream.json
-      
-    );
+      { assignment = i; }
+      |> yojson_of_interpretation
+      |> Yojson.Safe.to_string
+      |> Dream.json);
 
 ]
