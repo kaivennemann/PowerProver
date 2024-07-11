@@ -1,4 +1,4 @@
 (executable
  (public_name power_prover)
  (name main)
- (libraries power_prover))
+ (libraries power_prover api))

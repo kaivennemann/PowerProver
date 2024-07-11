@@ -1,6 +1,4 @@
 (include_subdirs qualified)
 
 (library
- (name power_prover)
- (libraries dream)
- (preprocess (pps lwt_ppx ppx_yojson_conv)))
+ (name power_prover))
