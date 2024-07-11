@@ -11,12 +11,36 @@ type interpretation = {
   assignment : (string * bool) list option;
 } [@@deriving yojson]
 
+let get_data d = d.data
+
 let routes = [
 
   Dream.get "/health"
     (fun _ ->
       "{\"status\": \"pass\"}"
       |> Dream.json);
+
+  Dream.post "/validate_formula"
+    (fun request ->
+      let%lwt body = Dream.body request in
+
+      let input = 
+        body
+        |> Yojson.Safe.from_string
+        |> post_request_data_of_yojson
+        |> get_data
+      in
+      
+      try
+        input
+        |> parse_input
+        |> Power_prover.To_string.string_of_prop
+        |> fun s -> "{\"is_formula\": true, \"formula\":" ^ s ^ "}"
+        |> Dream.json
+      
+      with _ -> (* TODO: 400 Bad Request, error message *)
+        "{\"is_formula\": false, \"formula\": \"" ^ input ^ "\"}"
+        |> Dream.json);
 
   Dream.post "/satisfy"
     (fun request ->
