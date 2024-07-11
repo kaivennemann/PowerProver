@@ -13,18 +13,9 @@ type interpretation = {
 
 let routes = [
 
-  Dream.post "/"
-    (fun request ->
-      let%lwt body = Dream.body request in
-
-      let _ = (* post_request_data *)
-        body
-        |> Yojson.Safe.from_string
-        |> post_request_data_of_yojson
-      in
-
-      `String "Dummy return data"
-      |> Yojson.Safe.to_string
+  Dream.get "/health"
+    (fun _ ->
+      "{\"status\": \"pass\"}"
       |> Dream.json);
 
   Dream.post "/satisfy"
