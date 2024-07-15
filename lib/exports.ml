@@ -5,4 +5,6 @@ let parse_input = Input_sanitization.Input_sanitizer.process
 
 let find_satisfying_interpretation = Satisfiability.Satisfiable.satisfy
 
+let get_sequent_calculus_proof = () (* TODO *)
 
+let get_tableau_calculus_proof = () (* TODO *)
