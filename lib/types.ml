@@ -30,3 +30,10 @@ type tok =
   | LEFT_PAREN
   | RIGHT_PAREN
   | SKIP
+
+(* sequent *)
+type seq = Seq of proposition list * proposition list 
+
+(* tree of sequents where Br(s, l) represents a sequent s and a list l of
+ * strees that together prove s *)
+type stree = Br of seq * stree list

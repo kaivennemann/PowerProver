@@ -190,6 +190,7 @@ TODO
     - tableau calculus
     - free variable tableau calculus
 - propositional and first-order logic
+- other L&P parts?
 - Hoare logic?
 
 ### Fixes

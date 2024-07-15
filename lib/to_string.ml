@@ -26,8 +26,8 @@ let string_of_interpr (i : interpretation) =
     | (s, value) :: tl -> "(" ^ s ^ ": " ^ (string_of_bool value) ^ "), " ^ (stringify tl)
   in "[" ^ (stringify i) ^ "]";;
 
-let print x string_of_x = x |> string_of_x |> print_endline
-let print_prop prop = print prop string_of_prop
+let print string_of_x x = x |> string_of_x |> print_endline
+let print_prop prop = print string_of_prop prop
 
 let string_of_tok = function
   | TRUE -> "TRUE"
@@ -45,3 +45,10 @@ let string_of_tok = function
 let rec string_of_tokens = function
   | [] -> ""
   | t :: ts -> "[" ^ string_of_tok t ^ "] " ^ string_of_tokens ts
+
+let string_of_seq (Seq (p1, p2)) =
+  let rec string_of_prop_list = function
+    | [] -> ""
+    | p :: ps -> (string_of_prop p) ^ ", " ^ (string_of_prop_list ps)
+  in
+  (string_of_prop_list p1) ^ "⇒" ^ (string_of_prop_list p2)
