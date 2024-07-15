@@ -11,7 +11,6 @@ let () =
   let lex_result = lex "(p > (q > (p > p)))" in (* "a & b & c = z > x & y | c" *)
   let parse_result = parse lex_result in
   let proof = Power_prover.Sequent_calculus.Sequent_proof.prove_sequent (Seq([], [parse_result])) in
-  let Br(s, _) = proof in
-  print string_of_seq s
+  print string_of_stree proof
 
 let () = Api.Startapp.startapp ()

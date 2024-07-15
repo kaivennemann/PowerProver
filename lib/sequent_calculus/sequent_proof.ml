@@ -30,5 +30,5 @@ let get_dependencies (s : seq) : seq list =
 (* TODO: deal with <-> case *)
 let rec prove_sequent (s : seq) : stree =
   let dependencies = get_dependencies s in
-  let dependency_proofs = List.map prove_sequent dependencies in
-  Br(s, dependency_proofs)
+  let proofs = List.map prove_sequent dependencies in
+  Concl(s, proofs)

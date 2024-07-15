@@ -34,6 +34,6 @@ type tok =
 (* sequent *)
 type seq = Seq of proposition list * proposition list 
 
-(* tree of sequents where Br(s, l) represents a sequent s and a list l of
+(* tree of sequents where Conclusion(s, l) represents a sequent s and a list l of
  * strees that together prove s *)
-type stree = Br of seq * stree list
+type stree = Concl of seq * stree list
