@@ -13,7 +13,9 @@ let routes = [
   Dream.post "/satisfy"
     satisfy_endpoint;
   
-  (* /sequent_calculus_proof *)
+  Dream.post "/sequent_proof"
+    sequent_proof_endpoint;
+    
   (* /tableau_calculus_proof *)
 
 ]

@@ -14,7 +14,7 @@ type interpretation = {
 let get_data d = d.data
 
 let health_endpoint _ =
-  "{\"status\": \"pass\"}"
+  {|{"status": "pass"}|}
   |> Dream.json
 
 let validate_formula_endpoint request = 
@@ -45,17 +45,37 @@ let satisfy_endpoint request =
     body
     |> Yojson.Safe.from_string
     |> post_request_data_of_yojson
-  in
-  
-  let i =
-    input.data
+    |> get_data
     |> parse_input
     |> find_satisfying_interpretation
   in
 
-  { assignment = i; }
+  { assignment = input; }
   |> yojson_of_interpretation
   |> Yojson.Safe.to_string
   |> Dream.json
 
+let sequent_proof_endpoint request =
+  let%lwt body = Dream.body request in
 
+  let seq_proof =
+    body
+    |> Yojson.Safe.from_string
+    |> post_request_data_of_yojson
+    |> get_data
+    |> parse_input
+    |> get_sequent_calculus_proof
+  in
+
+  let json_string =
+    begin
+      match seq_proof with
+      | None -> {|{"is_provable": "false"}|}
+      | Some tree ->
+          let s = Power_prover.To_string.json_string_of_stree tree in
+          {|{"is_provable": "true", "sequent_proof": |} ^ s ^ "}"
+    end
+  in
+
+  json_string
+  |> Dream.json
