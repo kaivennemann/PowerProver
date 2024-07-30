@@ -32,3 +32,10 @@ let rec prove_sequent (s : seq) : stree =
   let dependencies = get_dependencies s in
   let proofs = List.map prove_sequent dependencies in
   Concl(s, proofs)
+
+(* Prove a proposition via the sequent calculus or return None if not provable *)
+let prove (p : proposition): stree option =
+  try
+    Some (prove_sequent (Seq ([], [p])))
+  with NotProvable _ ->
+    None

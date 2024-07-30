@@ -49,8 +49,12 @@ let rec string_of_tokens = function
 let string_of_seq (Seq (p1s, p2s)) =
   let p1_string = String.concat ", " (List.map string_of_prop p1s) in
   let p2_string = String.concat ", " (List.map string_of_prop p2s) in
-  p1_string ^ "⇒" ^ p2_string
+  p1_string ^ " ⇒ " ^ p2_string
 
 let rec string_of_stree = function
   | Concl(s, []) -> "[" ^ string_of_seq s ^ "]"
   | Concl(s, trees) -> "Seq(" ^ string_of_seq s ^ "| " ^ (String.concat "; " (List.map string_of_stree trees))  ^ ")"
+
+let rec json_string_of_stree = function
+  | Concl(s, []) -> "[\"" ^ string_of_seq s ^ "\", []]"
+  | Concl(s, trees) -> "[\"" ^ string_of_seq s ^ "\", " ^ (String.concat ", " (List.map json_string_of_stree trees)) ^ "]"
