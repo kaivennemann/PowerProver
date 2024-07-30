@@ -57,4 +57,4 @@ let rec string_of_stree = function
 
 let rec json_string_of_stree = function
   | Concl(s, []) -> "[\"" ^ string_of_seq s ^ "\", []]"
-  | Concl(s, trees) -> "[\"" ^ string_of_seq s ^ "\", " ^ (String.concat ", " (List.map json_string_of_stree trees)) ^ "]"
+  | Concl(s, trees) -> "[\"" ^ string_of_seq s ^ "\", [" ^ (String.concat ", " (List.map json_string_of_stree trees)) ^ "]]"
